@@ -1,0 +1,1 @@
+ChessError = Class.new(StandardError)
