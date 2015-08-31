@@ -5,8 +5,8 @@ class Player
   def initialize(color, board)
     @color = color
     @board = board
-    @start_cursor = [rand(8), rand(8)]
-    @end_cursor = [rand(8), rand(8)]
+    idx = (:black == color ? 3 : 4)
+    @end_cursor = @start_cursor = [idx, idx]
   end
 
   def make_move
@@ -21,29 +21,29 @@ class Player
   end
 
 
-    def move_cursor(cursor)
-      done = false
-      until (done)
-        board.render(start_cursor, end_cursor, self)
+  def move_cursor(cursor)
+    done = false
+    until (done)
+      board.render(start_cursor, end_cursor, self)
 
-        input = get_arrow_keys
-        case input
-        when "UP ARROW"
-          cursor[0] -= 1 unless cursor[0] == 0
-        when "DOWN ARROW"
-          cursor[0] += 1 unless cursor[0] == 7
-        when "RIGHT ARROW"
-          cursor[1] += 1 unless cursor[1] == 7
-        when "LEFT ARROW"
-          cursor[1] -= 1 unless cursor[1] == 0
-        when "RETURN"
-          done = true
-        when :s
-          return :save
-        end
+      input = get_arrow_keys
+      case input
+      when :up
+        cursor[0] -= 1 unless cursor[0] == 0
+      when :down
+        cursor[0] += 1 unless cursor[0] == 7
+      when :right
+        cursor[1] += 1 unless cursor[1] == 7
+      when :left
+        cursor[1] -= 1 unless cursor[1] == 0
+      when :return
+        done = true
+      when :s
+        return :save
       end
     end
+  end
 
-    private
-    attr_accessor :start_cursor, :end_cursor
+  private
+  attr_accessor :start_cursor, :end_cursor
 end

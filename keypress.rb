@@ -22,15 +22,15 @@ def get_arrow_keys
 
   case c
   when "\e[A"
-    return "UP ARROW"
+    return :up
   when "\e[B"
-    return "DOWN ARROW"
+    return :down
   when "\e[C"
-    return "RIGHT ARROW"
+    return :right
   when "\e[D"
-    return "LEFT ARROW"
+    return :left
   when "\r"
-    return "RETURN"
+    return :return
   when "\u0003"
     puts "CONTROL-C"
     exit 0

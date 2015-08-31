@@ -4,6 +4,7 @@ This file demonstrates a ruby implementation of the classic game, Chess.
 
 #### Features
 
+* Interactive display. Select squares changes color upon selection of a piece, showing the selected piece's possible moves.
 * Class inheritance reduce code redundancy.
   * Each chess piece is an instance of a class.
   * Types of chess pieces share common methods to DRY code.
