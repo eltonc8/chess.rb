@@ -6,6 +6,6 @@ class King < Piece
   end
 
   def move_vectors
-     diagonal_vectors + orthogonal_vectors
+    diagonal_vectors + orthogonal_vectors
   end
 end

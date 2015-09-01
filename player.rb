@@ -29,13 +29,13 @@ class Player
       input = get_arrow_keys
       case input
       when :up
-        cursor[0] -= 1 unless cursor[0] == 0
+        cursor[0] -= 1 unless cursor[0] <= 0
       when :down
-        cursor[0] += 1 unless cursor[0] == 7
-      when :right
-        cursor[1] += 1 unless cursor[1] == 7
+        cursor[0] += 1 unless cursor[0] >= 7
       when :left
-        cursor[1] -= 1 unless cursor[1] == 0
+        cursor[1] -= 1 unless cursor[1] <= 0
+      when :right
+        cursor[1] += 1 unless cursor[1] >= 7
       when :return
         done = true
       when :s
