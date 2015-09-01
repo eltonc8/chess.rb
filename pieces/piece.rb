@@ -9,11 +9,7 @@ class Piece
   end
 
   def color_eql?(input)
-    if input.is_a?(Symbol)
-      return color == input
-    else
-      color == input.color
-    end
+    color == ( input.is_a?(Symbol) ? input : input.color )
   end
 
   def color_opposite?(input)
@@ -22,15 +18,11 @@ class Piece
 
   def move_to(end_pos, commit = false)
     @pos = end_pos
-    commit && @moved = true
+    commit && (@moved ||= true)
   end
 
   def to_s
-    if color == :black
-      self.symbol.colorize(:black)
-    else
-      self.symbol
-    end
+    color == :black ? self.symbol.colorize(:black) : self.symbol
   end
 
   def move_vectors

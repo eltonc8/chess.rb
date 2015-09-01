@@ -7,26 +7,24 @@ class Pawn < Piece
     color == :black ? 1 : -1
   end
 
+  def valid_diagonal_attack
+    [[pos[0]+ move_direction, pos[1] + 1], [pos[0]+ move_direction, pos[1] - 1]]
+    .select do |coords|
+      board.piece_at(coords).is_a?(Piece) &&
+      self.color_opposite?(board.piece_at(coords))
+    end
+  end
+
+  def valid_forward(offset = 1)
+    forward = [pos[0] + offset * move_direction, pos[1]]
+
+    return [] if board.occupied?(forward) || !board.on_board?(forward)
+
+    [forward].concat( (moved || offset > 1) ? [] : valid_forward(2) )
+  end
+
   def valid_moves
-    possible_pos = []
-    one_forward = [pos[0]+ move_direction, pos[1]]
-    if board.on_board?(one_forward) && !board.occupied?(one_forward)
-      possible_pos << one_forward
-      two_forward = [pos[0]+ 2 * move_direction, pos[1]]
-      if !moved && !board.occupied?(two_forward)
-        possible_pos << two_forward
-      end
-    end
-
-    diagonals = [[pos[0]+ move_direction, pos[1] + 1], [pos[0]+ move_direction, pos[1] - 1]]
-    diagonals.each do |coords|
-      if board.piece_at(coords).is_a?(Piece) &&
-        self.color_opposite?(board.piece_at(coords))
-        possible_pos << coords
-      end
-    end
-
-    possible_pos
+    valid_diagonal_attack + valid_forward
   end
 
   def valid_move?(end_pos)
