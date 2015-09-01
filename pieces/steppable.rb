@@ -4,10 +4,8 @@ module Steppable
   end
 
   def valid_moves
-    all_moves.select! do |coord|
-      #only positions on board AND either unoccupied OR is occupied and is not the same color
-      board.on_board?(coord) &&
-      !( board.occupied?(coord) && self.color_eql?(board.piece_at(coord)) )
+    all_moves.select do |coord|
+      board.can_move_into?(self, coord)
     end
   end
 

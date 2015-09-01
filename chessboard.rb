@@ -143,6 +143,13 @@ class Board
     grid[row][col] = value
   end
 
+  def can_move_into?(piece, pos)
+    return false unless on_board?(pos)
+    return true  unless occupied?(pos)
+
+    !piece.color_eql?(piece_at(pos))
+  end
+
   def on_board?(pos)
     pos.all? { |el| (0..7).cover?(el) }
   end
@@ -189,10 +196,6 @@ class EmptySquare
   end
 
   def move_to (*args)
-  end
-
-  def color
-    nil
   end
 
   def to_s
