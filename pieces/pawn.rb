@@ -18,7 +18,7 @@ class Pawn < Piece
   def valid_forward(offset = 1)
     forward = [pos[0] + offset * move_direction, pos[1]]
 
-    return [] if board.occupied?(forward) || !board.on_board?(forward)
+    return [] if !board.on_board?(forward) || board.occupied?(forward)
 
     [forward].concat( (moved || offset > 1) ? [] : valid_forward(2) )
   end

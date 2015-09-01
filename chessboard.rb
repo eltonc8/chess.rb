@@ -191,6 +191,10 @@ class EmptySquare
   def move_to (*args)
   end
 
+  def color
+    nil
+  end
+
   def to_s
     '  '
   end

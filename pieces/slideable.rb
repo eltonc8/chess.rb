@@ -5,25 +5,20 @@ module Slideable
 
   def all_in_one_direction(start_pos, vector)
     next_pt = slide_next(start_pos, vector)
-    return [] unless board.on_board?(next_pt)
-    if board.occupied?(next_pt) #the space has another piece
-      if self.color_eql?(board.piece_at(next_pt))
-        return []
-      else
-        return [next_pt]
-      end
+
+    if !board.on_board?(next_pt) || self.color_eql?(board.piece_at(next_pt))
+      []
+    elsif board.occupied?(next_pt) #the space has another piece
+      [next_pt]
     else #the space is empty
       [next_pt] + all_in_one_direction(next_pt, vector)
     end
   end
 
   def valid_moves
-    possible_pos = []
-    move_vectors.each do |vector|
-      possible_pos += all_in_one_direction(pos, vector)
-    end
-
-    possible_pos
+    move_vectors.map do |vector|
+      all_in_one_direction(pos, vector)
+    end.inject(:+)
   end
 
   def valid_move?(end_pos)
