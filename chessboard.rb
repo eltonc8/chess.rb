@@ -12,56 +12,8 @@ class Board
     setup_grid
   end
 
-  ## METHODS concerning
-  def move(moves, player_color)
-    start_pos, end_pos = moves
-    check_player_input_error(start_pos, end_pos, player_color)
-    check_moving_into_check_error(start_pos, end_pos, player_color)
-    commit_move!(start_pos, end_pos)
-  end
-
-  def check_moving_into_check_error(start_pos, end_pos, player_color)
-    unless next_move_not_in_check?(start_pos, end_pos, player_color)
-      raise ChessError.new "Can't put yourself in check!!!"
-    end
-  end
-
-  def check_player_input_error(start_pos, end_pos, player_color)
-    current_piece = self[start_pos]
-    if start_pos == end_pos
-      raise ChessError.new "Identical Start-End Error"
-    elsif !current_piece.is_a?(Piece)
-      raise ChessError.new "Selecting Empty Space Error"
-    elsif player_color != current_piece.color
-      raise ChessError.new "Can't move other player's piece Error"
-    elsif !current_piece.valid_move?(end_pos)
-      raise ChessError.new "Invalid Move Error"
-    end
-  end
-
-  def next_move_not_in_check?(start_pos, end_pos, player_color)
-    current_piece, displaced_item = self[start_pos], self[end_pos]
-    swap_positions(start_pos, end_pos, current_piece, EmptySquare.new)
-    boolean = !check?(player_color)
-    swap_positions(start_pos, end_pos, displaced_item, current_piece)
-
-    boolean #this method returns true if the next move is valid
-  end
-
-  def swap_positions(start_pos, end_pos, start_pos_piece, end_pos_piece, commit = false)
-    self[end_pos], self[start_pos] = start_pos_piece, end_pos_piece
-    start_pos_piece.move_to(end_pos, commit)
-    end_pos_piece.move_to(start_pos, commit)
-  end
-
-  def commit_move!(start_pos, end_pos, count = true)
-    self.turn_count = 1 + turn_count.to_i if count
-    current_piece = self[start_pos]
-    self[end_pos].move_to([10,10]) if self[end_pos].is_a?(Piece)
-    swap_positions(start_pos, end_pos, current_piece, EmptySquare.new, true)
-    promote_last_lines
-  end
-
+  ## METHODS concerning initializing of board game
+  ##########
   def setup_grid
     @grid = Array.new(8) { Array.new(8) { EmptySquare.new } }
     set_major_minor
@@ -85,6 +37,43 @@ class Board
     end
   end
 
+  ## METHODS concerning submitting movement of pieces
+  def check_moving_into_check_error(start_pos, end_pos, player_color)
+    unless next_move_not_in_check?(start_pos, end_pos, player_color)
+      raise ChessError.new "Can't put yourself in check!!!"
+    end
+  end
+
+  def check_player_input_error(start_pos, end_pos, player_color)
+    current_piece = self[start_pos]
+    if start_pos == end_pos
+      raise ChessError.new "Identical Start-End Error"
+    elsif !current_piece.is_a?(Piece)
+      raise ChessError.new "Selecting Empty Space Error"
+    elsif player_color != current_piece.color
+      raise ChessError.new "Can't move other player's piece Error"
+    elsif !current_piece.valid_move?(end_pos)
+      raise ChessError.new "Invalid Move Error"
+    end
+  end
+
+  def move(moves, player_color)
+    start_pos, end_pos = moves
+    check_player_input_error(start_pos, end_pos, player_color)
+    check_moving_into_check_error(start_pos, end_pos, player_color)
+    commit_move!(start_pos, end_pos)
+  end
+
+  ## METHODS concerning movement of pieces - test of move validity
+  ##########
+  def commit_move!(start_pos, end_pos, count = true)
+    self.turn_count = 1 + turn_count.to_i if count
+    current_piece = self[start_pos]
+    self[end_pos].move_to([10,10]) if self[end_pos].is_a?(Piece)
+    swap_positions(start_pos, end_pos, current_piece, EmptySquare.new, true)
+    promote_last_lines
+  end
+
   def grab_valid_moves(starting_pos, player)
     current_piece = self[starting_pos]
     return [] if !current_piece.is_a?(Piece) || current_piece.color_opposite?(player)
@@ -93,6 +82,61 @@ class Board
     end
   end
 
+  def next_move_not_in_check?(start_pos, end_pos, player_color)
+    current_piece, displaced_item = self[start_pos], self[end_pos]
+    swap_positions(start_pos, end_pos, current_piece, EmptySquare.new)
+    boolean = !check?(player_color)
+    swap_positions(start_pos, end_pos, displaced_item, current_piece)
+
+    boolean #this method returns true if the next move is valid
+  end
+
+  def remove_at(end_pos)
+    self[end_pos].move_to([10,10])
+    self[end_pos] = EmptySquare.new
+  end
+
+  def swap_positions(start_pos, end_pos, start_pos_piece, end_pos_piece, commit = false)
+    self[end_pos], self[start_pos] = start_pos_piece, end_pos_piece
+    start_pos_piece.move_to(end_pos, commit)
+    end_pos_piece.move_to(start_pos, commit)
+  end
+
+  def promote_last_lines
+    [0, 7].each do |row|
+      (0..7).each do |col|
+        piece = self[[row, col]]
+        next unless piece.is_a?(Pawn) && !piece.is_a?(King)
+
+        self[piece.pos]= Queen.new( piece.color, [row, col], self)
+      end
+    end
+  end
+
+  ## METHODS concerning game winning mechanics
+  ##########
+  def check?(player_color)
+    all_pieces = pieces
+    current_king = all_pieces.select { |piece| piece.is_a?(King) && piece.color_eql?(player_color) }.first
+    enemy_pieces = all_pieces.select { |piece| piece.color_opposite?(player_color) }
+    enemy_pieces.any? do |piece|
+      piece.valid_moves.include?(current_king.pos)
+    end
+  end
+
+  def checkmate?
+    color_in_check = [:black, :white].select { |color| check?(color) }.first
+    return false if color_in_check.nil?
+    players_pieces = pieces.select { |piece| piece.color_eql?(color_in_check) }
+    players_pieces.none? do |piece| #checkmate if NONE of the pieces have...
+      piece.valid_moves.any? do |move| #... ANY valid moves
+        next_move_not_in_check?(piece.pos, move, color_in_check)
+      end
+    end
+  end
+
+  ## METHODS concerning user interface
+  ##########
   def render(cursor_start = [], cursor_end = [], player = nil)
     scheme = color_scheme(cursor_start, cursor_end, player)
     system('clear')
@@ -139,6 +183,8 @@ class Board
     scheme
   end
 
+  ## METHDOS concerning accessing states of the board, basic utilities
+  ##########
   def [](pos)
     row, col = pos
     grid[row][col]
@@ -149,11 +195,6 @@ class Board
     grid[row][col] = value
   end
 
-  def remove_at(end_pos)
-    self[end_pos].move_to([10,10])
-    self[end_pos] = EmptySquare.new
-  end
-
   def can_move_into?(piece, pos)
     return false unless on_board?(pos)
     return true  unless occupied?(pos)
@@ -161,51 +202,20 @@ class Board
     !piece.color_eql?(piece_at(pos))
   end
 
-  def on_board?(pos)
-    pos.all? { |el| (0..7).cover?(el) }
-  end
-
   def occupied?(pos)
     self[pos].is_a? Piece
+  end
+
+  def on_board?(pos)
+    pos.all? { |el| (0..7).cover?(el) }
   end
 
   def piece_at(pos)
     self[pos]
   end
 
-  def check?(player_color)
-    all_pieces = pieces
-    current_king = all_pieces.select { |piece| piece.is_a?(King) && piece.color_eql?(player_color) }.first
-    enemy_pieces = all_pieces.select { |piece| piece.color_opposite?(player_color) }
-    enemy_pieces.any? do |piece|
-      piece.valid_moves.include?(current_king.pos)
-    end
-  end
-
   def pieces
     grid.flatten.select { |square| square.is_a?(Piece) }
-  end
-
-  def promote_last_lines
-    [0, 7].each do |row|
-      (0..7).each do |col|
-        piece = self[[row, col]]
-        next unless piece.is_a?(Pawn) && !piece.is_a?(King)
-
-        self[piece.pos]= Queen.new( piece.color, [row, col], self)
-      end
-    end
-  end
-
-  def checkmate?
-    color_in_check = [:black, :white].select { |color| check?(color) }.first
-    return false if color_in_check.nil?
-    players_pieces = pieces.select { |piece| piece.color_eql?(color_in_check) }
-    players_pieces.none? do |piece| #checkmate if NONE of the pieces have...
-      piece.valid_moves.any? do |move| #... ANY valid moves
-        next_move_not_in_check?(piece.pos, move, color_in_check)
-      end
-    end
   end
 
   private

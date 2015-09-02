@@ -14,12 +14,26 @@ class Game
     @players = [Player.new(:white, @board), Player.new(:black, @board)]
   end
 
+  ## METHODS concerning players
+  ##########
   def switch_player
     players.rotate!
   end
 
   def current_player
     players.first
+  end
+
+  ## METHODS concerning game-play
+  ##########
+  def end_game_message
+    board.render
+    puts "congrats!".colorize(:yellow)
+    puts "#{current_player.color} is in checkmate!".colorize(:red)
+  end
+
+  def game_over?
+    board.checkmate?
   end
 
   def play
@@ -39,16 +53,8 @@ class Game
     end_game_message
   end
 
-  def game_over?
-    board.checkmate?
-  end
-
-  def end_game_message
-    board.render
-    puts "congrats!".colorize(:yellow)
-    puts "#{current_player.color} is in checkmate!".colorize(:red)
-  end
-
+  ## METHODS concerning I/O
+  ##########
   def save_game
     print "saving game to what filename? "
     filename = STDIN.gets.chomp

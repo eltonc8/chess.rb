@@ -20,6 +20,13 @@ This file demonstrates a ruby implementation of the classic game, Chess.
 * to load a game, run `ruby chessgame.rb [filename]`
 * to save a game, during any turns, press `s`
 
+##### en passant
+* Special capture move, en passant, is discriminately permitted for only the pawn (f-5) moved in the previous turn, and not for pawn moved at an earlier time (d-5).
 ![en_passant](https://raw.githubusercontent.com/eltonc88/chess.rb/master/img/en_passant.png)
+
+##### castling
+* Special move, castling, is permitted for king and rook pairs that were in original positions.
 ![castling_1](https://raw.githubusercontent.com/eltonc88/chess.rb/master/img/castling_1.png)
+
+* Castling move is not permitted in the direction of a rook that had been moved.
 ![castling_2](https://raw.githubusercontent.com/eltonc88/chess.rb/master/img/castling_2.png)
