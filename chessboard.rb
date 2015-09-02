@@ -5,7 +5,7 @@ require_relative 'chesserrors.rb'
 require 'byebug'
 
 class Board
-  attr_reader :turn
+  attr_reader :turn_count
 
   def initialize
     setup_grid
@@ -52,10 +52,11 @@ class Board
     end_pos_piece.move_to(start_pos, commit)
   end
 
-  def commit_move!(start_pos, end_pos)
+  def commit_move!(start_pos, end_pos, count = false)
     current_piece = self[start_pos]
     self[end_pos].move_to([10,10]) if self[end_pos].is_a?(Piece)
     swap_positions(start_pos, end_pos, current_piece, EmptySquare.new, true)
+    turn_count = 1 + turn_count.to_i if count
   end
 
   def setup_grid
@@ -189,6 +190,7 @@ class Board
 
   private
   attr_accessor :current_pos, :grid, :current_move, :last_move, :move_history, :death_bucket
+  attr_writer :turn_count
 end
 
 

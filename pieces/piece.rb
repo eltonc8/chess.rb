@@ -18,7 +18,7 @@ class Piece
 
   def move_to(end_pos, commit = false)
     @pos = end_pos
-    commit && (@moved ||= true)
+    commit && (@moved ||= board.turn_count)
   end
 
   def to_s

@@ -10,8 +10,24 @@ class Pawn < Piece
   def valid_diagonal_attack
     [[pos[0]+ move_direction, pos[1] + 1], [pos[0]+ move_direction, pos[1] - 1]]
     .select do |coords|
-      board.piece_at(coords).is_a?(Piece) &&
-      self.color_opposite?(board.piece_at(coords))
+      if board.on_board?(coords)
+        if board.occupied?(coords)
+          !self.color_eql?(board.piece_at(coords))
+        else
+          en_passant(coords)
+        end
+      else
+        false
+      end
+    end
+  end
+
+  def en_passant(coords)
+    if pos[0] != (7 + move_direction) / 2 || !board.on_board?(coords)
+      nil
+    else
+      ep_pos = [pos[0], coords[1]]
+      coords if board.occupied?(ep_pos) && !self.color_eql?(board.piece_at(ep_pos))
     end
   end
 
@@ -32,7 +48,7 @@ class Pawn < Piece
   end
 
   def valid_moves
-    valid_diagonal_attack + valid_forward( [move_direction, 0], (moved ? 1 : 2) )
+    valid_diagonal_attack + valid_forward( [move_direction,0], (moved ? 1 : 2) )
   end
 
   def valid_move?(end_pos)

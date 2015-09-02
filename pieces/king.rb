@@ -23,7 +23,7 @@ class King < Pawn
     if (end_pos[1] - pos[1]).abs == 2
       destination = [pos[0], (end_pos[1] + pos[1]) / 2]
       origin = [pos[0], (end_pos[1] < pos[1]) ? 0 : 7]
-      board.commit_move!(origin, destination)
+      board.commit_move!(origin, destination, false)
     end
   end
 
