@@ -7,6 +7,12 @@ class Pawn < Piece
     color == :black ? 1 : -1
   end
 
+  def move_to(end_pos, commit = false)
+    ep_pos = en_passant(end_pos)
+    super
+    board.remove_at(ep_pos) if ep_pos && commit
+  end
+
   def valid_diagonal_attack
     [[pos[0]+ move_direction, pos[1] + 1], [pos[0]+ move_direction, pos[1] - 1]]
     .select do |coords|
@@ -27,7 +33,9 @@ class Pawn < Piece
       nil
     else
       ep_pos = [pos[0], coords[1]]
-      coords if board.occupied?(ep_pos) && !self.color_eql?(board.piece_at(ep_pos))
+      ep_pos if board.occupied?(ep_pos) &&
+                !self.color_eql?(board.piece_at(ep_pos)) &&
+                board.piece_at(ep_pos).moved == board.turn_count
     end
   end
 

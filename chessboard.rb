@@ -52,11 +52,11 @@ class Board
     end_pos_piece.move_to(start_pos, commit)
   end
 
-  def commit_move!(start_pos, end_pos, count = false)
+  def commit_move!(start_pos, end_pos, count = true)
+    self.turn_count = 1 + turn_count.to_i if count
     current_piece = self[start_pos]
     self[end_pos].move_to([10,10]) if self[end_pos].is_a?(Piece)
     swap_positions(start_pos, end_pos, current_piece, EmptySquare.new, true)
-    turn_count = 1 + turn_count.to_i if count
   end
 
   def setup_grid
@@ -146,6 +146,11 @@ class Board
     grid[row][col] = value
   end
 
+  def remove_at(end_pos)
+    self[end_pos].move_to([10,10])
+    self[end_pos] = EmptySquare.new
+  end
+
   def can_move_into?(piece, pos)
     return false unless on_board?(pos)
     return true  unless occupied?(pos)
@@ -187,6 +192,7 @@ class Board
       end
     end
   end
+
 
   private
   attr_accessor :current_pos, :grid, :current_move, :last_move, :move_history, :death_bucket
