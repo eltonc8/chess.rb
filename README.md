@@ -20,6 +20,6 @@ This file demonstrates a ruby implementation of the classic game, Chess.
 * to load a game, run `ruby chessgame.rb [filename]`
 * to save a game, during any turns, press `s`
 
-![en_passant]:(./img/en_passant.png)
-![castling_1]:(./img/castling_1.png)
-![castling_2]:(./img/castling_2.png)
+![en_passant](https://raw.githubusercontent.com/eltonc88/chess.rb/master/img/en_passant.png)
+![castling_1](https://raw.githubusercontent.com/eltonc88/chess.rb/master/img/castling_1.png)
+![castling_2](https://raw.githubusercontent.com/eltonc88/chess.rb/master/img/castling_2.png)
