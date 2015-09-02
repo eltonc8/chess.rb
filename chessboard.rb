@@ -12,6 +12,7 @@ class Board
     setup_grid
   end
 
+  ## METHODS concerning
   def move(moves, player_color)
     start_pos, end_pos = moves
     check_player_input_error(start_pos, end_pos, player_color)
