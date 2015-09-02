@@ -56,7 +56,7 @@ class Pawn < Piece
   end
 
   def valid_moves
-    valid_diagonal_attack + valid_forward( [move_direction,0], (moved ? 1 : 2) )
+    valid_diagonal_attack + valid_forward([move_direction , 0], (moved ? 1 : 2))
   end
 
   def valid_move?(end_pos)

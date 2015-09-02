@@ -2,6 +2,7 @@ require "colorize"
 require_relative 'keypress.rb'
 require_relative 'pieces/piece.rb'
 require_relative 'chesserrors.rb'
+require_relative 'chess_empty_square.rb'
 require 'byebug'
 
 class Board
@@ -175,8 +176,9 @@ class Board
     all_pieces = pieces
     current_king = all_pieces.select { |piece| piece.is_a?(King) && piece.color_eql?(player_color) }.first
     enemy_pieces = all_pieces.select { |piece| piece.color_opposite?(player_color) }
-
-    enemy_pieces.any? { |piece| piece.valid_moves.include?(current_king.pos) }
+    enemy_pieces.any? do |piece|
+      piece.valid_moves.include?(current_king.pos)
+    end
   end
 
   def pieces
@@ -187,7 +189,7 @@ class Board
     [0, 7].each do |row|
       (0..7).each do |col|
         piece = self[[row, col]]
-        next unless piece.is_a?(Pawn)
+        next unless piece.is_a?(Pawn) && !piece.is_a?(King)
 
         self[piece.pos]= Queen.new( piece.color, [row, col], self)
       end
@@ -205,22 +207,7 @@ class Board
     end
   end
 
-
   private
   attr_accessor :current_pos, :grid, :current_move, :last_move, :move_history, :death_bucket
   attr_writer :turn_count
-end
-
-
-
-class EmptySquare
-  def initialize
-  end
-
-  def move_to (*args)
-  end
-
-  def to_s
-    '  '
-  end
 end
