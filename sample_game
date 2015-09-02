@@ -24,7 +24,7 @@ board: &1 !ruby/object:Board
       moved: false
     - !ruby/object:Queen
       color: :black
-      pos:
+      pos: &2
       - 0
       - 3
       board: *1
@@ -121,29 +121,16 @@ board: &1 !ruby/object:Board
     - !ruby/object:EmptySquare {}
     - !ruby/object:Pawn
       color: :black
-      pos: &2
+      pos:
       - 3
       - 4
       board: *1
-      moved: true
+      moved: 2
     - !ruby/object:EmptySquare {}
     - !ruby/object:EmptySquare {}
     - !ruby/object:EmptySquare {}
   - - !ruby/object:EmptySquare {}
     - !ruby/object:EmptySquare {}
-    - !ruby/object:EmptySquare {}
-    - !ruby/object:EmptySquare {}
-    - !ruby/object:EmptySquare {}
-    - !ruby/object:EmptySquare {}
-    - !ruby/object:Pawn
-      color: :white
-      pos: &4
-      - 4
-      - 6
-      board: *1
-      moved: true
-    - !ruby/object:EmptySquare {}
-  - - !ruby/object:EmptySquare {}
     - !ruby/object:EmptySquare {}
     - !ruby/object:EmptySquare {}
     - !ruby/object:EmptySquare {}
@@ -151,10 +138,23 @@ board: &1 !ruby/object:Board
     - !ruby/object:Pawn
       color: :white
       pos: &3
-      - 6
+      - 4
       - 6
       board: *1
-      moved: true
+      moved: 3
+    - !ruby/object:EmptySquare {}
+  - - !ruby/object:EmptySquare {}
+    - !ruby/object:EmptySquare {}
+    - !ruby/object:EmptySquare {}
+    - !ruby/object:EmptySquare {}
+    - !ruby/object:EmptySquare {}
+    - !ruby/object:Pawn
+      color: :white
+      pos:
+      - 5
+      - 5
+      board: *1
+      moved: 1
     - !ruby/object:EmptySquare {}
     - !ruby/object:EmptySquare {}
   - - !ruby/object:Pawn
@@ -257,6 +257,7 @@ board: &1 !ruby/object:Board
       - 7
       board: *1
       moved: false
+  turn_count: 3
 players:
 - !ruby/object:Player
   color: :black
@@ -266,5 +267,7 @@ players:
 - !ruby/object:Player
   color: :white
   board: *1
-  start_cursor: *3
-  end_cursor: *4
+  start_cursor:
+  - 6
+  - 6
+  end_cursor: *3
