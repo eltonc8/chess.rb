@@ -9,6 +9,7 @@ This file demonstrates a ruby implementation of the classic game, Chess.
   * Each chess piece is an instance of a class.
   * Types of chess pieces share common methods to DRY code.
 * Implementation of I/O functions permit saving and loading of games.
+* Special moves, en passant and castling, are implemented in their respective classes, demonstrating effective modularity of code.
 
 #### How to run
 
@@ -19,6 +20,6 @@ This file demonstrates a ruby implementation of the classic game, Chess.
 * to load a game, run `ruby chessgame.rb [filename]`
 * to save a game, during any turns, press `s`
 
-![en_passant]: ./img/en_passant.png
-![castling_1]: ./img/castling_1.png
-![castling_2]: ./img/castling_2.png
+![en_passant]:(./img/en_passant.png)
+![castling_1]:(./img/castling_1.png)
+![castling_2]:(./img/castling_2.png)
