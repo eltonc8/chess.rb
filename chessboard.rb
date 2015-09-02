@@ -15,7 +15,7 @@ class Board
     start_pos, end_pos = moves
     check_player_input_error(start_pos, end_pos, player_color)
     check_moving_into_check_error(start_pos, end_pos, player_color)
-    commit_move!(end_pos, start_pos)
+    commit_move!(start_pos, end_pos)
   end
 
   def check_moving_into_check_error(start_pos, end_pos, player_color)
@@ -52,7 +52,7 @@ class Board
     end_pos_piece.move_to(start_pos, commit)
   end
 
-  def commit_move!(end_pos, start_pos)
+  def commit_move!(start_pos, end_pos)
     current_piece = self[start_pos]
     self[end_pos].move_to([10,10]) if self[end_pos].is_a?(Piece)
     swap_positions(start_pos, end_pos, current_piece, EmptySquare.new, true)
