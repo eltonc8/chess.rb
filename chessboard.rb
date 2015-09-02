@@ -5,6 +5,8 @@ require_relative 'chesserrors.rb'
 require 'byebug'
 
 class Board
+  attr_reader :turn
+
   def initialize
     setup_grid
   end
