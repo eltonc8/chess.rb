@@ -34,8 +34,8 @@ class Pawn < Piece
     else
       ep_pos = [pos[0], coords[1]]
       ep_pos if board.occupied?(ep_pos) &&
-                !self.color_eql?(board.piece_at(ep_pos)) &&
-                board.piece_at(ep_pos).moved == board.turn_count
+                !board.piece_at(ep_pos).color_eql?(self) &&
+                (board.piece_at(ep_pos).moved.to_i - board.turn_count).abs < 2
     end
   end
 

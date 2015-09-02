@@ -38,6 +38,7 @@ class Board
   end
 
   ## METHODS concerning submitting movement of pieces
+  ##########
   def check_moving_into_check_error(start_pos, end_pos, player_color)
     unless next_move_not_in_check?(start_pos, end_pos, player_color)
       raise ChessError.new "Can't put yourself in check!!!"

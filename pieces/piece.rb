@@ -5,7 +5,7 @@ class Piece
     @color = color
     @pos = pos
     @board = board
-    @moved = false
+    @moved = nil
   end
 
   def color_eql?(input)
