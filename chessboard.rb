@@ -57,6 +57,7 @@ class Board
     current_piece = self[start_pos]
     self[end_pos].move_to([10,10]) if self[end_pos].is_a?(Piece)
     swap_positions(start_pos, end_pos, current_piece, EmptySquare.new, true)
+    promote_last_lines
   end
 
   def setup_grid
@@ -180,6 +181,17 @@ class Board
 
   def pieces
     grid.flatten.select { |square| square.is_a?(Piece) }
+  end
+
+  def promote_last_lines
+    [0, 7].each do |row|
+      (0..7).each do |col|
+        piece = self[[row, col]]
+        next unless piece.is_a?(Pawn)
+
+        self[piece.pos]= Queen.new( piece.color, [row, col], self)
+      end
+    end
   end
 
   def checkmate?
