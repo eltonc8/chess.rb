@@ -21,9 +21,7 @@ describe "Piece movements" do
         expected_moves = [[1, 3], [2, 4], [3, 5], [4, 6], [5, 7]]
         valid_moves = piece.valid_moves
 
-        expected_moves.each do |pos|
-          expect(valid_moves).to include(pos)
-        end
+        expect(valid_moves).to include(*expected_moves)
       end
 
       it "starting as black left has 2 diagonal moves of set II" do
@@ -33,9 +31,7 @@ describe "Piece movements" do
         expected_moves = [[1, 1], [2, 0]]
         valid_moves = piece.valid_moves
 
-        expected_moves.each do |pos|
-          expect(valid_moves).to include(pos)
-        end
+        expect(valid_moves).to include(*expected_moves)
       end
 
       it "starting as white right has 5 diagonal moves of set I" do
@@ -45,9 +41,7 @@ describe "Piece movements" do
         expected_moves = [[6, 4], [5, 3], [4, 2], [3, 1], [2, 0]]
         valid_moves = piece.valid_moves
 
-        expected_moves.each do |pos|
-          expect(valid_moves).to include(pos)
-        end
+        expect(valid_moves).to include(*expected_moves)
       end
 
       it "starting as white right has 2 diagonal moves of set II" do
@@ -57,9 +51,7 @@ describe "Piece movements" do
         expected_moves = [[6, 6], [5, 7]]
         valid_moves = piece.valid_moves
 
-        expected_moves.each do |pos|
-          expect(valid_moves).to include(pos)
-        end
+        expect(valid_moves).to include(*expected_moves)
       end
 
       it "starting at the center has 14 correct moves" do
@@ -84,9 +76,7 @@ describe "Piece movements" do
                                      [0, 5], [0, 6], [0, 7]]
         valid_moves = piece.valid_moves
 
-        expected_horizontal_moves.each do |pos|
-          expect(valid_moves).to include(pos)
-        end
+        expect(valid_moves).to include(*expected_horizontal_moves)
       end
 
       it "starting as black left has 7 vertical moves" do
@@ -97,9 +87,7 @@ describe "Piece movements" do
                                    [5, 0], [6, 0], [7, 0]]
         valid_moves = piece.valid_moves
 
-        expected_vertical_moves.each do |pos|
-          expect(valid_moves).to include(pos)
-        end
+        expect(valid_moves).to include(*expected_vertical_moves)
       end
 
       it "starting as white right has 7 horizontal moves" do
@@ -110,9 +98,7 @@ describe "Piece movements" do
                                      [7, 4], [7, 5], [7, 6]]
         valid_moves = piece.valid_moves
 
-        expected_horizontal_moves.each do |pos|
-          expect(valid_moves).to include(pos)
-        end
+        expect(valid_moves).to include(*expected_horizontal_moves)
       end
 
       it "starting as white right has 7 vertical moves" do
@@ -123,9 +109,7 @@ describe "Piece movements" do
                                    [7, 4], [7, 5], [7, 6]]
         valid_moves = piece.valid_moves
 
-        expected_vertical_moves.each do |pos|
-          expect(valid_moves).to include(pos)
-        end
+        expect(valid_moves).to include(*expected_vertical_moves)
       end
 
       it "starting at the center has 14 correct moves" do
