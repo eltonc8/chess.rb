@@ -13,52 +13,6 @@ describe "Piece movements" do
   let(:board) { Board.new(true, true) }
 
   describe "Slideable Pieces" do
-
-    describe "Queen" do
-      it "starting as black has 21 possible moves" do
-        pos = [0, 3]
-        piece = Queen.new(:black, pos, board)
-        board[pos]= piece
-
-        expect(piece.valid_moves.length).to eq(21)
-      end
-
-      it "starting as white has 21 possible moves" do
-        pos = [7, 3]
-        piece = Queen.new(:black, pos, board)
-        board[pos]= piece
-
-        expect(piece.valid_moves.length).to eq(21)
-      end
-
-      it "starting at the center has 25 possible moves" do
-        pos = [5, 5]
-        piece = Queen.new(:white, pos, board)
-        board[pos]= piece
-
-        expect(piece.valid_moves.length).to eq(25)
-      end
-
-      it "starting at the center has 25 correct moves" do
-        pos = [5, 5]
-        piece = Queen.new(:white, pos, board)
-        board[pos]= piece
-        expected_moves_I = [[0, 0], [1, 1], [2, 2], [3, 3],
-                            [4, 4], [6, 6], [7, 7]]
-        expected_moves_II = [[3, 7], [4, 6], [6, 4], [7, 3]]
-        expected_vertical_moves = [[0, 5], [1, 5], [2, 5], [3, 5],
-                                   [4, 5], [6, 5], [7, 5]]
-        expected_horizontal_moves = [[5, 0], [5, 1], [5, 2], [5, 3],
-                                     [5, 4], [5, 6], [5, 7]]
-        expected_moves = (
-          expected_moves_I + expected_moves_II +
-          expected_vertical_moves + expected_horizontal_moves
-        ).uniq
-
-        expect(piece.valid_moves.sort).to eq(expected_moves.sort)
-      end
-    end
-
     describe "Bishop" do
       it "starting as black left has 5 diagonal moves of set I" do
         pos = [0, 2]
@@ -187,12 +141,55 @@ describe "Piece movements" do
         expect(piece.valid_moves.sort).to eq(expected_moves.sort)
       end
     end
+
+    describe "Queen" do
+      it "starting as black has 21 possible moves" do
+        pos = [0, 3]
+        piece = Queen.new(:black, pos, board)
+        board[pos]= piece
+
+        expect(piece.valid_moves.length).to eq(21)
+      end
+
+      it "starting as white has 21 possible moves" do
+        pos = [7, 3]
+        piece = Queen.new(:black, pos, board)
+        board[pos]= piece
+
+        expect(piece.valid_moves.length).to eq(21)
+      end
+
+      it "starting at the center has 25 possible moves" do
+        pos = [5, 5]
+        piece = Queen.new(:white, pos, board)
+        board[pos]= piece
+
+        expect(piece.valid_moves.length).to eq(25)
+      end
+
+      it "starting at the center has 25 correct moves" do
+        pos = [5, 5]
+        piece = Queen.new(:white, pos, board)
+        board[pos]= piece
+        expected_moves_I = [[0, 0], [1, 1], [2, 2], [3, 3],
+                            [4, 4], [6, 6], [7, 7]]
+        expected_moves_II = [[3, 7], [4, 6], [6, 4], [7, 3]]
+        expected_vertical_moves = [[0, 5], [1, 5], [2, 5], [3, 5],
+                                   [4, 5], [6, 5], [7, 5]]
+        expected_horizontal_moves = [[5, 0], [5, 1], [5, 2], [5, 3],
+                                     [5, 4], [5, 6], [5, 7]]
+        expected_moves = (
+          expected_moves_I + expected_moves_II +
+          expected_vertical_moves + expected_horizontal_moves
+        ).uniq
+
+        expect(piece.valid_moves.sort).to eq(expected_moves.sort)
+      end
+    end
   end
 
   describe "Steppble Pieces" do
-
     describe "King" do
-
       it "starting as black has 5 possible moves" do
         pos = [0, 4]
         piece = King.new(:black, pos, board)
@@ -223,7 +220,6 @@ describe "Piece movements" do
     end
 
     describe "Knight" do
-
       it "starting as black left has 3 correct moves" do
         pos = [0, 1]
         piece = Knight.new(:black, pos, board)
@@ -290,7 +286,6 @@ describe "Piece movements" do
 
         expect(piece.valid_moves.sort).to eq(expected_moves.sort)
       end
-
     end
   end
 end
