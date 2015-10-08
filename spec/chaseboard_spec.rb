@@ -1,7 +1,7 @@
 require 'chessboard'
 
 describe Board do
-  subject(:test_board) { Board.new }
+  subject(:test_board) { Board.new(true) }
 
   describe "#on_board?" do
     it "should have method" do

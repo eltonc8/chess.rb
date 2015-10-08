@@ -8,18 +8,20 @@ require 'byebug'
 class Board
   attr_reader :turn_count
 
-  def initialize(grid = nil)
-    grid ? (@grid = grid) : setup_grid
+  def initialize(skip_render = false, skip_set_pieces = false)
+    setup_grid(skip_render, skip_set_pieces)
   end
 
   ## METHODS concerning initializing of board game
   ##########
-  def setup_grid
+  def setup_grid(skip_render, skip_set_pieces)
     @grid = Array.new(8) { Array.new(8) { EmptySquare.new } }
-    set_major_minor
-    set_pawns
+    unless skip_set_pieces
+      set_major_minor
+      set_pawns
+    end
 
-    render
+    render unless skip_render
   end
 
   def set_major_minor

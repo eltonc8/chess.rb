@@ -9,7 +9,7 @@ require 'pieces/knight'
 require 'pieces/pawn'
 
 describe Piece do
-  let(:board) { double("board")}
+  let(:board) { double("board") }
 
   describe "Slideable Pieces" do
 
@@ -89,9 +89,4 @@ describe Piece do
       end
     end
   end
-
-
-
-
-
 end
