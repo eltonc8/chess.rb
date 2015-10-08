@@ -14,10 +14,11 @@ This file demonstrates a ruby implementation of the classic game, Chess.
 #### How to run
 
 * download repository to local file.
+* run "bundle install" to install dependencies.
 * to begin a new game, run `ruby chessgame.rb`
   * use arrow keys to navigate game board.
   * press enter to select, move, or deselect a piece.
-* to load a game, run `ruby chessgame.rb [filename]`
+* to load a game, run `ruby lib/chessgame.rb [filename]`.
 * to save a game, during any turns, press `s`
 
 ##### en passant
