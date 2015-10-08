@@ -5,7 +5,7 @@ describe Board do
 
   describe "#on_board?" do
     it "should have method" do
-      test_board.should respond_to :on_board?
+      expect(test_board).to respond_to(:on_board?)
     end
 
     it "should return true for the ranges 0..7 for both x, y" do
@@ -20,6 +20,7 @@ describe Board do
     it "should return false for any x or y out side of range 0..7" do
       [-2,-1,8,9].each do |x|
         (0..7).each do |y|
+          expect(test_board.on_board?([x,x])).to be(false)
           expect(test_board.on_board?([x,y])).to be(false)
           expect(test_board.on_board?([y,x])).to be(false)
         end
@@ -29,7 +30,7 @@ describe Board do
 
   describe "#occupied?" do
     it "should have method" do
-      test_board.should respond_to :occupied?
+      expect(test_board).to respond_to(:occupied?)
     end
 
     it "should initialize with top two and last two rows occupied" do

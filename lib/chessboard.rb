@@ -8,8 +8,8 @@ require 'byebug'
 class Board
   attr_reader :turn_count
 
-  def initialize
-    setup_grid
+  def initialize(grid = nil)
+    grid ? (@grid = grid) : setup_grid
   end
 
   ## METHODS concerning initializing of board game
