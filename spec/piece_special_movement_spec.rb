@@ -1,17 +1,17 @@
 require 'chessboard'
 
-describe "Piece movements" do
+describe "Piece special movements" do
   let(:board) { Board.new(true, true) }
 
-  before(:each) do
-    [[0, 0], [0, 7], [7, 0], [7, 7]].each do |pos|
-      color = pos[0].zero? ? :black : :white
-      piece = Rook.new(color, pos, board)
-      board[pos]= piece
-    end
-  end
-
   describe "King Castling" do
+    before(:each) do
+      [[0, 0], [0, 7], [7, 0], [7, 7]].each do |pos|
+        color = pos[0].zero? ? :black : :white
+        piece = Rook.new(color, pos, board)
+        board[pos]= piece
+      end
+    end
+
     describe "Black King" do
       it "starting as black has 7 possible moves with castling" do
         pos = [0, 4]
@@ -105,9 +105,11 @@ describe "Piece movements" do
         board.move([[7, 5], [7, 4]], :white)
 
         expected_moves = [[7, 3], [7, 5], [6, 3], [6, 4], [6, 5]]
-        
+
         expect(piece.valid_moves.sort).to eq(expected_moves.sort)
       end
     end
   end
+
+
 end
