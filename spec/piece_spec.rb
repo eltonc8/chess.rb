@@ -1,12 +1,4 @@
 require 'pieces/piece'
-require 'pieces/steppable'
-require 'pieces/queen'
-require 'pieces/bishop'
-require 'pieces/rook'
-require 'pieces/slideable'
-require 'pieces/king'
-require 'pieces/knight'
-require 'pieces/pawn'
 
 describe Piece do
   let(:board) { double("board") }
