@@ -24,14 +24,11 @@ This file demonstrates a ruby implementation of the classic game, Chess.
 
 ##### en passant
 * Special capture move, en passant, is discriminately permitted for only the pawn (f-5) moved in the previous turn, and not for pawn moved at an earlier time (d-5).
-![en_passant](https://raw.githubusercontent.com/eltonc88/chess.rb/master/img/en_passant.png)
-{: width="350px"}
+<img src="https://raw.githubusercontent.com/eltonc88/chess.rb/master/img/en_passant.png" align="center" width="350" >
 
 ##### castling
 * Special move, castling, is permitted for king and rook pairs that were in original positions.
-![castling_1](https://raw.githubusercontent.com/eltonc88/chess.rb/master/img/castling_1.png)
-{: width="350px"}
+<img src="https://raw.githubusercontent.com/eltonc88/chess.rb/master/img/castling_1.png" align="center" width="350" >
 
 * Castling move is not permitted in the direction of a rook that had been moved.
-![castling_2](https://raw.githubusercontent.com/eltonc88/chess.rb/master/img/castling_2.png)
-{: width="350px"}
+<img src="https://raw.githubusercontent.com/eltonc88/chess.rb/master/img/castling_2.png" align="center" width="350" >
