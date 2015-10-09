@@ -32,3 +32,7 @@ This file demonstrates a ruby implementation of the classic game, Chess.
 
 * Castling move is not permitted in the direction of a rook that had been moved.
 <img src="https://raw.githubusercontent.com/eltonc88/chess.rb/master/img/castling_2.png" align="center" width="350" >
+
+##### testing
+* rspec 3.1 was used to perform automated testing.
+<img src="https://raw.githubusercontent.com/eltonc88/chess.rb/master/img/rspec.png" align="center" width="350" >
