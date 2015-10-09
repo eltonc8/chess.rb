@@ -11,7 +11,11 @@ class King < Pawn
 
   alias_method :super_vm, :valid_moves
   def valid_moves
-    super_vm + (moved ? [] : valid_castle_moves )
+    if moved
+      super_vm
+    else
+      super_vm.concat(valid_castle_moves).uniq
+    end
   end
 
   def move_to(end_pos, commit = false)
@@ -28,17 +32,24 @@ class King < Pawn
   end
 
   def valid_castle_moves
-    [[pos[0], 0], [pos[0], 7]].map do |coords|
-      piece = board.piece_at(coords)
+    moves = []
+    row = pos[0]
+    [0,7].each do |col|
+      next unless can_castling_to?([row, col])
 
-      if piece.is_a?(Rook) && !piece.moved
-        diff_x = coords[1] - pos[1]
-        dir = abs_dir(diff_x)
+      range = ( col.zero? ? (1..3) : (5..6) )
+      return if range.any? { |col2| board.occupied?([row, col2]) }
+      dir = [0, col.zero? ? -1 : 1]
 
-        [pos[0], pos[1] + 2 * dir] if valid_forward([0, dir]).length == diff_x.abs - 1
-      else
-        nil
-      end
-    end.compact
+      moves.concat( moves_in_direction_of(dir, false, 2) )
+    end
+
+    moves
+  end
+
+  def can_castling_to?(pos)
+    board.occupied?(pos) &&
+    board.piece_at(pos).is_a?(Rook) &&
+    !board.piece_at(pos).moved
   end
 end
